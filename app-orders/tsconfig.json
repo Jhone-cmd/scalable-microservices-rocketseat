@@ -8,6 +8,7 @@
       "ESNext.Collection",
       "ESNext.Iterator"
     ],
+    "noEmit": true,
     "allowImportingTsExtensions": true,
     "module": "nodenext",
     "target": "es2022",
