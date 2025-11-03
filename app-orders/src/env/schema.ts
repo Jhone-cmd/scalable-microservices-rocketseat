@@ -1,4 +1,5 @@
 import z from "zod";
+import 'dotenv/config'
 
 const schema = z.object({
     DATABASE_URL: z.url()
