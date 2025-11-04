@@ -1,0 +1,20 @@
+import { text } from "drizzle-orm/pg-core";
+import { timestamp } from "drizzle-orm/pg-core";
+import { pgEnum } from "drizzle-orm/pg-core";
+import { integer } from "drizzle-orm/pg-core";
+import { pgTable } from "drizzle-orm/pg-core";
+import { randomUUID } from "node:crypto";
+
+export const orderStatusEnum = pgEnum('orders_status', [
+    'pending',
+    'paid',
+    'canceled'
+])
+
+export const orders = pgTable('orders', {
+    id: text().primaryKey().$defaultFn(() => randomUUID()),
+    consumerId: text().notNull(),
+    amount: integer().notNull(),
+    status: orderStatusEnum().default('pending').notNull(),
+    createdAt: timestamp().defaultNow().notNull()
+})
