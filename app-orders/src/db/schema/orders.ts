@@ -14,7 +14,7 @@ export const orderStatusEnum = pgEnum('orders_status', [
 
 export const orders = pgTable('orders', {
     id: text().primaryKey().$defaultFn(() => randomUUID()),
-    consumerId: text().notNull().references(() => customers.id),
+    customerId: text().notNull().references(() => customers.id),
     amount: integer().notNull(),
     status: orderStatusEnum().default('pending').notNull(),
     createdAt: timestamp().defaultNow().notNull()
