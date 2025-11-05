@@ -4,6 +4,7 @@ import { pgEnum } from "drizzle-orm/pg-core";
 import { integer } from "drizzle-orm/pg-core";
 import { pgTable } from "drizzle-orm/pg-core";
 import { randomUUID } from "node:crypto";
+import { customers } from "./customers.ts";
 
 export const orderStatusEnum = pgEnum('orders_status', [
     'pending',
@@ -13,7 +14,7 @@ export const orderStatusEnum = pgEnum('orders_status', [
 
 export const orders = pgTable('orders', {
     id: text().primaryKey().$defaultFn(() => randomUUID()),
-    consumerId: text().notNull(),
+    consumerId: text().notNull().references(() => customers.id),
     amount: integer().notNull(),
     status: orderStatusEnum().default('pending').notNull(),
     createdAt: timestamp().defaultNow().notNull()

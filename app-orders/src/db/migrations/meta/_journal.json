@@ -15,6 +15,13 @@
       "when": 1762345314045,
       "tag": "0001_broad_beyonder",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1762345669781,
+      "tag": "0002_silly_proudstar",
+      "breakpoints": true
     }
   ]
 }
