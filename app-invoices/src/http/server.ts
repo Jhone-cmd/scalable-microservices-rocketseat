@@ -1,3 +1,4 @@
+import '../broker/subscriber.ts'
 import fastify from "fastify"
 import fastifyCors from "@fastify/cors"
 import { serializerCompiler, validatorCompiler, type ZodTypeProvider } from 'fastify-type-provider-zod'
