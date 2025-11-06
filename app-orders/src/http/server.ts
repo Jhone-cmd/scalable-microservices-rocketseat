@@ -5,6 +5,7 @@ import z from 'zod'
 import { db } from "../db/client.ts"
 import { schema } from "../db/schema/index.ts"
 import { dispatchOrderCreated } from "../broker/messages/order-created.ts"
+import { env } from "../env/schema.ts"
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -48,6 +49,6 @@ app.post('/orders', {
 
 })
 
-app.listen({ host: '0.0.0.0', port: 3333 }).then(() => {
+app.listen({ host: '0.0.0.0', port: env.PORT }).then(() => {
     console.log('[Orders] HTTP Server Running!')
 })
