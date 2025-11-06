@@ -1,4 +1,4 @@
-import { broker } from "../broker.ts";
+import { broker } from '../broker.ts'
 
 export const orders = await broker.createChannel()
 

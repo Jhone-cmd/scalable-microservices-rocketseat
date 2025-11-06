@@ -3,3 +3,9 @@ node_modules
 
 # Files
 .env
+
+# Folders
+dist
+logs
+temp
+.vscode
