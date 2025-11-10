@@ -13,6 +13,8 @@ import { dispatchOrderCreated } from '../broker/messages/order-created.ts'
 import { db } from '../db/client.ts'
 import { schema } from '../db/schema/index.ts'
 import { env } from '../env/schema.ts'
+import { tracer } from "../tracer/tracer.ts"
+import { setTimeout } from 'node:timers/promises'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -46,6 +48,14 @@ app.post(
         amount: schema.orders.amount,
         customerId: schema.orders.customerId,
       })
+
+    const span = tracer.startSpan('Problem')
+
+    span.setAttribute('test', 'The problem is happening here in this part.')
+
+    await setTimeout(3000)
+
+    span.end()
 
     trace.getActiveSpan()?.setAttribute('orderId', order.id)
 
