@@ -1,4 +1,5 @@
 import "@opentelemetry/auto-instrumentations-node/register"
+import { trace } from '@opentelemetry/api'
 
 import fastifyCors from '@fastify/cors'
 import fastify from 'fastify'
@@ -45,6 +46,8 @@ app.post(
         amount: schema.orders.amount,
         customerId: schema.orders.customerId,
       })
+
+    trace.getActiveSpan()?.setAttribute('orderId', order.id)
 
     dispatchOrderCreated({
       orderId: order.id,
