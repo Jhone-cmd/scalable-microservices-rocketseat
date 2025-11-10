@@ -7,7 +7,6 @@ const schema = z.object({
   BROKER_URL: z.url(),
   OTEL_TRACES_EXPORTER: z.string(),
   OTEL_EXPORTER_OTLP_ENDPOINT: z.url(),
-  OTEL_NODE_RESOURCE_DETECTORS: z.string(),
   OTEL_SERVICE_NAME: z.string(),
   OTEL_NODE_ENABLED_INSTRUMENTATIONS: z.string(),
 })
