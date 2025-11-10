@@ -8,5 +8,15 @@ services:
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
 
+  jaeger:
+    image: jaegertracing/all-in-one:1.57
+    container_name: jaeger
+    ports:
+      - "16686:16686" # Jaeger UI port
+      - "6831:6831/udp" # Jaeger agent port
+      - "14268:14268" # Jaeger collector port HTTP
+      - "4313:4317" # Jaeger collector port OpenTelemetry gRPC
+      - "4318:4318" # Jaeger OpenTelemetry port HTTP
+
 volumes:
   rabbitmq_data:
