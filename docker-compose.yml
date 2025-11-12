@@ -18,5 +18,19 @@ services:
       - "4313:4317" # Jaeger collector port OpenTelemetry gRPC
       - "4318:4318" # Jaeger OpenTelemetry port HTTP
 
+  api-gateway:
+    image: kong:3.9
+    container_name: api-gateway
+    ports:
+      - "8000:8000" # Kong proxy port (API)
+      - "8001:8001" # Kong admin port
+      - "8002:8002" # Kong UI admin port
+      - "8443:8443" # Kong proxy SSL port (HTTPS)
+      - "8444:8444" # Kong admin SSL port (HTTPS)
+    environment:
+      KONG_DATABASE: "off"
+      KONG_ADMIN_LISTEN: "0.0.0.0:8001"
+      KONG_ADMIN_GUI_URL: "http://localhost:8002"
+
 volumes:
   rabbitmq_data:
