@@ -1,2 +1,9 @@
 _format_version: "3.0"
 _transform: true
+
+services:
+  - name: orders
+    url: http://host.docker.internal:3333
+    protocol: http
+    port: 3333
+    path: /orders
