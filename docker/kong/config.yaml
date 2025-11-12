@@ -6,7 +6,18 @@ services:
     url: http://host.docker.internal:3333
     protocol: http
     port: 3333
-    path: /orders
+    path: /
+    connect_timeout: 30000
+    read_timeout: 30000
+    write_timeout: 30000
+    retries: 3
+    routes:
+      - name: app-orders
+        protocol:
+          - http
+          - https
+        paths:
+          - /orders
 
 plugins:
   - name: cors
