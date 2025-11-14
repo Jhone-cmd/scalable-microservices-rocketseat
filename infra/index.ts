@@ -12,9 +12,15 @@ const ordersECRToken = aws.ecr.getAuthorizationTokenOutput({
 })
 
 export const ordersDockerImage = new docker.Image('orders-image', {
+    tags: [
+        pulumi.interpolate`${ordersECRRepository.repository.repositoryUrl}:latest`
+    ],
     context: {
         location: '../app-orders',
     },
+    platforms: [
+        'linux/amd64'
+    ],
     push: true,
     registries: [{
         address: ordersECRRepository.repository.repositoryUrl,
