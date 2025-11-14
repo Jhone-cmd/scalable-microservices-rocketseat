@@ -7,12 +7,18 @@ const ordersECRRepository = new awsx.ecr.Repository('orders-ecr', {
     forceDelete: true
 })
 
+const ordersECRToken = aws.ecr.getAuthorizationTokenOutput({
+    registryId: ordersECRRepository.repository.registryId
+})
+
 export const ordersDockerImage = new docker.Image('orders-image', {
     context: {
         location: '../app-orders',
     },
     push: true,
     registries: [{
-        address: ordersECRRepository.repository.repositoryUrl
+        address: ordersECRRepository.repository.repositoryUrl,
+        username: ordersECRToken.userName,
+        password: ordersECRToken.password
     }]
 })
