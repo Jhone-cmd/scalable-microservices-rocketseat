@@ -32,3 +32,5 @@ export const ordersDockerImage = new docker.Image('orders-image', {
 // ECS + Fargate
 
 const cluster = new awsx.classic.ecs.Cluster('app-cluster')
+
+const orderService = new awsx.classic.ecs.FargateService('fargate-orders', {})
