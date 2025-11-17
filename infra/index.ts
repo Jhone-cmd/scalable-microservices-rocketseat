@@ -28,3 +28,7 @@ export const ordersDockerImage = new docker.Image('orders-image', {
         password: ordersECRToken.password
     }]
 })
+
+// ECS + Fargate
+
+const cluster = new awsx.classic.ecs.Cluster('app-cluster')
