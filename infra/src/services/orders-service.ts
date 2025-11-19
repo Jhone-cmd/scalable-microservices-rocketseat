@@ -16,6 +16,10 @@ export const ordersService = new awsx.classic.ecs.FargateService('fargate-orders
                 {
                     name: 'BROKER_URL',
                     value: `amqp://admin:admin@${amqpListener.endpoint.hostname}:${amqpListener.endpoint.port}`
+                },
+                {
+                    name: 'DATABASE_URL',
+                    value: 'postgresql://Jhone-cmd:Mqxavg9UmJm1@ep-spring-cell-23303556-pooler.us-east-2.aws.neon.tech/orders?sslmode=require&schema=public&connect_timeout=20'
                 }
             ]
         }
