@@ -1,6 +1,6 @@
 import * as awsx from "@pulumi/awsx";
-import { ordersDockerImage } from "../images/orders";
 import { cluster } from "../cluster";
+import { invoicesDockerImage } from "../images/invoices";
 
 export const invoicesService = new awsx.classic.ecs.FargateService('fargate-invoices', {
     cluster,
@@ -8,7 +8,7 @@ export const invoicesService = new awsx.classic.ecs.FargateService('fargate-invo
     waitForSteadyState: false,
     taskDefinitionArgs: {
         container: {
-            image: ordersDockerImage.ref,
+            image: invoicesDockerImage.ref,
             cpu: 256,
             memory: 512,
         }

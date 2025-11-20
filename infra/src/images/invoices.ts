@@ -11,7 +11,7 @@ const invoicesECRToken = aws.ecr.getAuthorizationTokenOutput({
     registryId: invoicesECRRepository.repository.registryId
 })
 
-export const ordersDockerImage = new docker.Image('invoices-image', {
+export const invoicesDockerImage = new docker.Image('invoices-image', {
     tags: [
         pulumi.interpolate`${invoicesECRRepository.repository.repositoryUrl}:latest`
     ],
