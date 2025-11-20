@@ -3,6 +3,22 @@ import { cluster } from "../cluster";
 import { invoicesDockerImage } from "../images/invoices";
 import * as pulumi from "@pulumi/pulumi"
 import { amqpListener } from "./rabbitmq-service";
+import { appLoadBalancer } from "../load-balancer";
+
+export const invoicesTargetGroup = appLoadBalancer.createTargetGroup('invoices-target', {
+    port: 3334,
+    protocol: 'HTTP',
+    healthCheck: {
+        path: '/health',
+        protocol: 'HTTP'
+    }
+})
+
+export const invoicesListener = appLoadBalancer.createListener('invoices-listener', {
+    port: 3334,
+    protocol: 'HTTP',
+    targetGroup: invoicesTargetGroup
+})
 
 export const invoicesService = new awsx.classic.ecs.FargateService('fargate-invoices', {
     cluster,
@@ -13,6 +29,9 @@ export const invoicesService = new awsx.classic.ecs.FargateService('fargate-invo
             image: invoicesDockerImage.ref,
             cpu: 256,
             memory: 512,
+            portMappings: [
+                invoicesListener
+            ],
             environment: [
                 {
                     name: 'BROKER_URL',
