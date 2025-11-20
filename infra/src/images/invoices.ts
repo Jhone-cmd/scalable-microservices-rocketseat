@@ -7,6 +7,10 @@ const invoicesECRRepository = new awsx.ecr.Repository('invoices-erc', {
     forceDelete: true
 })
 
+const invoicesECRToken = aws.ecr.getAuthorizationTokenOutput({
+    registryId: invoicesECRRepository.repository.registryId
+})
+
 export const ordersDockerImage = new docker.Image('invoices-image', {
     tags: [
         pulumi.interpolate`${invoicesECRRepository.repository.repositoryUrl}:latest`
@@ -20,5 +24,7 @@ export const ordersDockerImage = new docker.Image('invoices-image', {
     push: true,
     registries: [{
         address: invoicesECRRepository.repository.repositoryUrl,
+        username: invoicesECRToken.userName,
+        password: invoicesECRToken.password
     }]
 })
