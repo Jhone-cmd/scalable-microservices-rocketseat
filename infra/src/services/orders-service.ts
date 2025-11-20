@@ -3,6 +3,22 @@ import { ordersDockerImage } from "../images/orders";
 import { cluster } from "../cluster";
 import { amqpListener } from "./rabbitmq-service";
 import * as pulumi from '@pulumi/pulumi'
+import { appLoadBalancer } from "../load-balancer";
+
+export const ordersTargetGroup = appLoadBalancer.createTargetGroup('orders-target', {
+    port: 3333,
+    protocol: 'HTTP',
+    healthCheck: {
+        path: '/health',
+        protocol: 'HTTP'
+    }
+})
+
+export const ordersListener = appLoadBalancer.createListener('orders-listener', {
+    port: 3333,
+    protocol: 'HTTP',
+    targetGroup: ordersTargetGroup
+})
 
 export const ordersService = new awsx.classic.ecs.FargateService('fargate-orders', {
     cluster,
@@ -13,6 +29,9 @@ export const ordersService = new awsx.classic.ecs.FargateService('fargate-orders
             image: ordersDockerImage.ref,
             cpu: 256,
             memory: 512,
+            portMappings: [
+                ordersListener
+            ],
             environment: [
                 {
                     name: 'BROKER_URL',
